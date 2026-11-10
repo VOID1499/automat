@@ -1,0 +1,27 @@
+{
+  "name": "aws-lambda-00",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx -r dotenv/config src/local.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "build:lambda": "npm run build && powershell -Command \"if (Test-Path deployment) { Remove-Item deployment -Recurse -Force }; New-Item -ItemType Directory deployment; Copy-Item dist\\* deployment -Recurse; Copy-Item package.json deployment; Copy-Item package-lock.json deployment; Push-Location deployment; npm.cmd ci --omit=dev; Compress-Archive -Path * -DestinationPath ../lambda.zip -Force; Pop-Location\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "types": "node",
+  "dependencies": {
+    "googleapis": "^189.0.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.164",
+    "@types/node": "^26.6.6",
+    "dotenv": "^18.0.10",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
